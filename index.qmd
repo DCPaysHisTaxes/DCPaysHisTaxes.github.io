@@ -6,13 +6,12 @@ about:
 template: jolla
 image-shape: round 
 image-width: 17em
-links
+links:
  -text: LinkedIN
  href: https://www.linkedin.com/in/daniel-coker-b83a6027a/
  -text: Email
  href: danielcoker901@gmail.com
-
-Hello! My name is Daniel Coker, but almost everyone on campus calls me DC. I'm from Charlotte, North Carolina, and currently majoring in Mathematics and International Relations with a minor in Data Science. Some of the hobbies in hiking, table tennis, and listening to NPR podcast.
+ -text: Hello! My name is Daniel Coker, but almost everyone on campus calls me DC. I'm from Charlotte, North Carolina, and currently majoring in Mathematics and International Relations with a minor in Data Science. Some of the hobbies in hiking, table tennis, and listening to NPR podcast.
 ---
 
 This is a Quarto website.
