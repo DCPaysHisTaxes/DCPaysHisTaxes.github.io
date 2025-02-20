@@ -9,7 +9,7 @@ website:
       - href: index.qmd
         text: Home
       - about.qmd
-      - Work.qmd
+      - March Madness.qmd
 
 format:
   html:

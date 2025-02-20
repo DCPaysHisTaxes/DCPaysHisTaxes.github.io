@@ -1,23 +1,21 @@
 ---
 title: "Daniel Coker"
-image: DCPaysHisTaxes.github.io/Daniel_Coker.jpg
+image: Daniel_Coker.jpg
 toc: false
 about: 
-template: jolla
-image-shape: round 
-image-width: 17em
+   template: jolla
+   image-shape: round 
+   image-width: 17em
 links:
- -text: LinkedIN
- href: https://www.linkedin.com/in/daniel-coker-b83a6027a/
- -text: Email
- href: danielcoker901@gmail.com
- -text: Hello! My name is Daniel Coker, but almost everyone on campus calls me DC. I'm from Charlotte, North Carolina, and currently majoring in Mathematics and International Relations with a minor in Data Science. Some of the hobbies in hiking, table tennis, and listening to NPR podcast.
+- text: LinkedIn
+  href: https://www.linkedin.com/in/daniel-coker-b83a6027a/
+- text: Email
+  href: mailto:danielcoker901@gmail.com
 ---
 
-This is a Quarto website.
+My name is Daniel, and I enjoy rice!
 
 To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
 
 ```{r}
 1 + 1
-```
