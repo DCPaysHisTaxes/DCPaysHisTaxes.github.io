@@ -3,20 +3,21 @@ project:
   output-dir: docs
 
 website:
-  title: "DCPaysHisTaxes.github.io"
+  title: "Daniel Coker"
   navbar:
     left:
       - href: index.qmd
         text: Home
       - about.qmd
+      - Work.qmd
 
 format:
   html:
-    theme:
-      - cosmo
+    theme: journal
       - brand
     css: styles.css
     toc: true
+    page-layout: full
 
 editor: visual
 
