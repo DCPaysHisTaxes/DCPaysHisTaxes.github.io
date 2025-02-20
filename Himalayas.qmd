@@ -1,0 +1,25 @@
+---
+title: "The History of Himalayan Mountaineering Expeditions"
+text: Source (https://www.himalayandatabase.com/index.html). This was created by the Himalayan Database, a Non-Profit in Ann Arbor, MI.
+
+author: Daniel Coker
+date: February 19, 2025 
+format: html
+execute:
+  warning: false
+  message: false
+---
+
+```{r}
+library(tidyverse)
+
+mount <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-21/peaks_tidy.csv")
+
+ggplot(mount, aes(x = PYEAR, y = HEIGHTM, color = HEIGHTM )) + 
+  geom_point() + 
+  geom_line() + 
+  labs(title = "Regression between Height & Exp. Year", x = "Year of Expedition", y = "Max Height in Meter")
+
+
+
+```

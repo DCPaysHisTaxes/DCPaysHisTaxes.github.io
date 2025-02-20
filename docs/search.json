@@ -1,10 +1,17 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Daniel Coker",
+    "objectID": "Water Security.html",
+    "href": "Water Security.html",
+    "title": "Water Insecurity",
     "section": "",
-    "text": "My name is Daniel, and I enjoy rice! Thank you for stopping by! Have a good day!!"
+    "text": "water_sec &lt;- readr::read_csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-28/water_insecurity_2023.csv\") \n\nlibrary(ggplot2)\n\n\n\nggplot(water_sec, aes(x = percent_lacking_plumbing)) + \n  geom_histogram(fill = \"purple\", color = \"black\", bins = 30) + \n  facet_wrap(~ year) + \n  theme_light() + labs(title = \"Histogram between Lack of Plumbing with Years\", x = \"Percentage\")"
+  },
+  {
+    "objectID": "Himalayas.html",
+    "href": "Himalayas.html",
+    "title": "The History of Himalayan Mountaineering Expeditions",
+    "section": "",
+    "text": "library(tidyverse)\n\nmount &lt;- readr::read_csv(\"https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-21/peaks_tidy.csv\")\n\nggplot(mount, aes(x = PYEAR, y = HEIGHTM, color = HEIGHTM )) + \n  geom_point() + \n  geom_line() + \n  labs(title = \"Regression between Height & Exp. Year\", x = \"Year of Expedition\", y = \"Max Height in Meter\")"
   },
   {
     "objectID": "about.html",
@@ -12,5 +19,12 @@
     "title": "About",
     "section": "",
     "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Daniel Coker",
+    "section": "",
+    "text": "My name is Daniel, and I enjoy rice! Thank you for stopping by! Have a good day!!"
   }
 ]

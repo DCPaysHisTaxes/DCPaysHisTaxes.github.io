@@ -1,0 +1,26 @@
+---
+title: "Water Insecurity"
+text: Source(https://waterdata.usgs.gov/blog/acs-maps/) The dataset shows the areas and percentages for those who are most effected by water insecurity
+
+author: Daniel Coker 
+date: February 19, 2025
+format: html
+
+execute: 
+ warning: false
+ message: false
+---
+
+```{r}
+water_sec <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-28/water_insecurity_2023.csv") 
+
+library(ggplot2)
+
+
+
+ggplot(water_sec, aes(x = percent_lacking_plumbing)) + 
+  geom_histogram(fill = "purple", color = "black", bins = 30) + 
+  facet_wrap(~ year) + 
+  theme_light() + labs(title = "Histogram between Lack of Plumbing with Years", x = "Percentage")
+
+```

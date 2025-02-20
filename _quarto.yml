@@ -8,17 +8,20 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
-      - March Madness.qmd
+      - text: Data Viz
+        menu:
+          - text: "Himalayas"
+            href: Himalayas.html
+          - text: "Water Insecurity"
+            href: Water Security.html
 
 format:
   html:
-    theme: journal
+    theme:
+      - journal
       - brand
     css: styles.css
     toc: true
     page-layout: full
 
 editor: visual
-
-
