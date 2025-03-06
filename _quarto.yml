@@ -15,7 +15,7 @@ website:
           - text: "Water Insecurity"
             href: Water Security.html
           - text: "Obama Regression"
-            href: Obama-Tweets.pdf
+            href: Obama Tweet.html
 
 format:
   html:
