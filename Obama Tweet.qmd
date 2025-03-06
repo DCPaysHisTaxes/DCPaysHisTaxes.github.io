@@ -55,9 +55,9 @@ ggplot(tweet_counts, aes(x = MonthYear, y = n)) +
 
 ```
 
-Some insights that could be gained from this histogram is that not only was Obama very active during this time but some trends that standout from it. It is clear that he tweeted the most during the summer of 2015. There are several factors that could be studied as to why this was the case (could be nice to see this with another regression :) ) but this was the time where political candidates were entering into joining the presidental race, Black Lives Matter and other civil unrest, etc. Let's take a look into another graph that could tell us more about Obama's Twitter endeavors using a line graph
+Some insights that could be gained from this histogram is that not only was Obama very active during this time but some trends that standout from it. It is clear that he tweeted the most during the summer of 2015. There are several factors that could be studied as to why this was the case (could be nice to see this with another regression :) ) but this was the time where political candidates were entering into joining the presidental race, Black Lives Matter and other civil unrest, etc. Let's take a look into another graph that could tell us more about Obama's Twitter endeavors using a heatmap graph and the str_detect() function to find the various mentions of "America".
 
-1b. Heatmap (more nuanced)
+1b. Heatmap (more nuanced looking for the "America")
 
 ```{r}
 tweets |>
@@ -74,7 +74,7 @@ tweets |>
        fill = "Tweets")
 ```
 
-Here is another visualization behind Obama's tweet using a heatmap. It seems that his most active month during this time span was in July of 2015. Doing some intital research, there was many legislation that was passed on this month including the Legalization of Same-Sex Marriage, the Iran Nuclear Deal, Presidental Campaigns and PACs being established for the upcoming election, racial justice and tension regarding the Confederate flag, and much more (Wellford, Rachel. "Trump, Clinton and the Top 10 Political Stories of 2015." PBS NewsHour, 28 Dec. 2015, https://www.pbs.org/newshour/nation/trump-clinton-and-the-top-10-political-stories-of-2015.).
+Here is another visualization behind Obama's tweets mentioning America using a heatmap. It seems that his most active month during this time span was in July of 2015 and used America the most. Doing some intital research, there was many legislation that was passed on this month including the Legalization of Same-Sex Marriage, the Iran Nuclear Deal, Presidental Campaigns and PACs being established for the upcoming election, racial justice and tension regarding the Confederate flag, and much more (Wellford, Rachel. "Trump, Clinton and the Top 10 Political Stories of 2015." PBS NewsHour, 28 Dec. 2015, https://www.pbs.org/newshour/nation/trump-clinton-and-the-top-10-political-stories-of-2015.). It could be assumed that he's various mentions of America can be used to rally Americans and the democratic world at large.
 
 ```{r}
 knitr::include_graphics("Obama on Phone.jpg", dpi = 300)
@@ -84,9 +84,9 @@ With these two graphs and visualizations, it is clear to see certain trends behi
 
 Part 2: String Fun!
 
-Being the charamasitic president he is, I remember some of his most used catchphrases or words growing up like the back of my hand. Let's see some of the most frequently used words in his tweets.
+Being the charismatic president he is, I remember some of his most used catchphrases or words growing up like the back of my hand. Let's see some of the most frequently used words in his tweets.
 
-I have done some additional work and removed some of the most commonly used words in English. This includes articles, prepositions, etc. I used the str_lower (to remove case-sensitive words), str_replace_all (to get rid of puncation for easier wrangling)), and str_length(to compute and scan strings) to conduct my operations.
+I have done some additional work and removed some of the most commonly used words in English. This includes articles, prepositions, etc. I used the str_lower (to remove case-sensitive words), str_replace_all (to get rid of punctuation for easier wrangling)), and str_length(to compute and scan strings) to conduct my operations.
 
 ```{r}
 # List of words to exclude (they do not offer much if included)
@@ -103,7 +103,7 @@ tweets_clean <- tweets |>
          text = str_replace_all(text, "[^a-z\\s]", ""),  # Remove punctuation
          text_length = str_length(text))  # Compute tweet length
 
-# Tokenize, filter out specific words, and count words
+# Tokenize, filter out specific words, and count words (learned how to do this part outside of class)
 word_counts <- tweets_clean |>
   unnest_tokens(word, text) |>
   filter(str_detect(word, "(?<!\\b(?:you|the|to|and|a|for|on|of)\\b)"))  |>
@@ -134,7 +134,7 @@ word_counts |>
        y = "Frequency")
 ```
 
-These were Obama's most used words in his tweets. "We" was the most used word followed by "in" and "our". What might be learned from this was the Obama used his Twitter as a mechanism to advocate for Americans and for the world. The collectivist words used helped illustrate that narrative, and it's very cool to see that unity. This could be attributed to the ground breaking legislation and speeches combating the subsequent racial and gender injustice in the United States during his most active streak in the summer of 2015 and throughout the timeframe as a whole. Some words that stood out to me was "American", "All", and "Today" which further drives the narrative of unity spurred throughout his presidency.
+These were Obama's most used words in his tweets. "We" was the most used word followed by "in" and "our". What might be learned from this was the Obama used his Twitter as a mechanism to advocate for Americans and for the world. The collectivist words used helped illustrate that narrative, and it's very cool to see that unity. This could be attributed to the ground breaking legislation and speeches combating the subsequent racial and gender injustice in the United States during his most active streak in the summer of 2015 and throughout the timeframe as a whole. Some words that stood out to me was "American" (again), "All", and "Today" which further drives the narrative of unity spurred throughout his presidency.
 
 ```{r}
 knitr::include_graphics("Obama writing.jpg", dpi = 300)
@@ -142,7 +142,7 @@ knitr::include_graphics("Obama writing.jpg", dpi = 300)
 
 Part 3: Insights (What can we learn from this?)
 
-From understanding these graphs and the words picked a part from Obama's tweets, we can see an overaching narrative of unity and national pride throughout the latter end of this President's career in office. The use of social media was implemented early in his career in office. During times like this, it is important to see how a public offical should be using social media as a bridge between indifference and not as a tool for division.
+From understanding these graphs and the words picked a part from Obama's tweets, we can see an over-aching narrative of unity and national pride throughout the latter end of this President's career in office. The use of social media was implemented early in his career in office. During times like this, it is important to see how a public offical should be using social media as a bridge between indifference and not as a tool for division.
 
 SOURCES:
 
