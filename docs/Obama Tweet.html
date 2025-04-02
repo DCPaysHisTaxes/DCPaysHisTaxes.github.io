@@ -171,7 +171,7 @@ window.Quarto = {
   </li>  
         <li>
     <a class="dropdown-item" href="./Obama Tweet.html">
- <span class="dropdown-text">Obama Regression</span></a>
+ <span class="dropdown-text">Obama Tweet</span></a>
   </li>  
     </ul>
   </li>
@@ -227,17 +227,17 @@ window.Quarto = {
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In this project, we will be covering President’s Barack Obama’s various tweets during his time in office from 2015 to 2016 (during his last year). Obama was the first US President to use social media heavily during his stay in office, and have utilized it for his entire adminstration.</p>
+<p>In this project, we will be covering President’s Barack Obama’s various tweets during his time in office from 2015 to 2016 (during his last year). Obama was the first US President to use social media heavily during his stay in office, and have utilized it for his entire administration.</p>
 <ol start="0" type="1">
 <li>Background/Introduction</li>
 </ol>
-<p>According to the National Archieves, the Barack Obama Presidential Library’s Digital gives access to archived materials and substance during the Obama Adminstartion from 2009 - 2017. This includes things from pictures, datasets, social media, content, speechs, legislation, and much more during this historic President’s time in office. In this project, I analyzed, wrangled, and discussed the a dataset containing President’s Obama tweets from 2015 to the end of his campaign in 2016. I then discussed some potential variables / residuals that could explain some of the trends that you might see during my data collection and manipulation, providing insights into what everything means in the grand scheme of things.</p>
+<p>According to the National Archives, the Barack Obama Presidential Library’s Digital gives access to archived materials and substance during the Obama Administartion from 2009 - 2017. This includes things from pictures, datasets, social media, content, speeches, legislation, and much more during this historic President’s time in office. In this project, I analyzed, wrangled, and discussed the a dataset containing President’s Obama tweets from 2015 to the end of his campaign in 2016. I then discussed some potential variables / residuals that could explain some of the trends that you might see during my data collection and manipulation, providing insights into what everything means in the grand scheme of things.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"Obama Picture.jpg"</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Obama Picture.jpg" class="img-fluid figure-img"></p>
+<p><img src="Obama Picture.jpg" class="img-fluid figure-img" width="101"></p>
 </figure>
 </div>
 </div>
@@ -273,8 +273,8 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>Some insights that could be gained from this histrogram is that not only was Obama very active during this time but some trends that standout from it. It is clear that he tweeted the most during the summer of 2015. There are several factors that could be studied as to why this was the case (could be nice to see this with another regression :) ) but this was the time where political candidates were entering into joining the presidental race, Black Lives Matter and other civil unrest, etc. Let’s take a look into another graph that could tell us more about Obama’s Twitter endeavors using a line graph</p>
-<p>1b. Heatmap (more nuanced)</p>
+<p>Some insights that could be gained from this histogram is that not only was Obama very active during this time but some trends that standout from it. It is clear that he tweeted the most during the summer of 2015. There are several factors that could be studied as to why this was the case (could be nice to see this with another regression :) ) but this was the time where political candidates were entering into joining the presidental race, Black Lives Matter and other civil unrest, etc. Let’s take a look into another graph that could tell us more about Obama’s Twitter endeavors using a heatmap graph and the str_detect() function to find the various mentions of “America”.</p>
+<p>1b. Heatmap (more nuanced looking for the “America”)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>tweets <span class="sc">|&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(text, <span class="st">"(?i)</span><span class="sc">\\</span><span class="st">bamerica</span><span class="sc">\\</span><span class="st">b"</span>)) <span class="sc">|&gt;</span>  </span>
@@ -296,21 +296,21 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>Here is another visualization behind Obama’s tweet using a heatmap. It seems that his most active month during this time span was in July of 2015. Doing some intial research, there was many legislation that was passed on this month including the Legalization of Same-Sex Marriage, the Iran Nuclear Deal, Presidental Campaigns and pacs being established for the upcoming election, racial justice and tension regarding the Confederate flag, and much more (Wellford, Rachel. “Trump, Clinton and the Top 10 Political Stories of 2015.” PBS NewsHour, 28 Dec.&nbsp;2015, https://www.pbs.org/newshour/nation/trump-clinton-and-the-top-10-political-stories-of-2015.).</p>
+<p>Here is another visualization behind Obama’s tweets mentioning America using a heatmap. It seems that his most active month during this time span was in July of 2015 and used America the most. Doing some intital research, there was many legislation that was passed on this month including the Legalization of Same-Sex Marriage, the Iran Nuclear Deal, Presidental Campaigns and PACs being established for the upcoming election, racial justice and tension regarding the Confederate flag, and much more (Wellford, Rachel. “Trump, Clinton and the Top 10 Political Stories of 2015.” PBS NewsHour, 28 Dec.&nbsp;2015, https://www.pbs.org/newshour/nation/trump-clinton-and-the-top-10-political-stories-of-2015.). It could be assumed that he’s various mentions of America can be used to rally Americans and the democratic world at large.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"Obama on Phone.jpg"</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Obama on Phone.jpg" class="img-fluid figure-img"></p>
+<p><img src="Obama on Phone.jpg" class="img-fluid figure-img" width="310"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>With these two graphs and visualizations, it is clear to see certain trends behind the tweeting patterns of former President Obama. Now, lets get into some <span class="math inline">\(str()\)</span> action!</p>
 <p>Part 2: String Fun!</p>
-<p>Being the charamastic president he is, I remember some of his most used catchphrases or words growing up like the back of my hand. Let’s see some of the most frequently used words in his tweets.</p>
-<p>I have done some additional work and removed some of the most commonly used words in English. This includes articles, preposistions, etc. I used the str_lower (to remove case-sensitive words), str_replace_all (to get rid of punction for easier wrangling)), and str_length(to compute and scan strings) to conuduct my operations.</p>
+<p>Being the charismatic president he is, I remember some of his most used catchphrases or words growing up like the back of my hand. Let’s see some of the most frequently used words in his tweets.</p>
+<p>I have done some additional work and removed some of the most commonly used words in English. This includes articles, prepositions, etc. I used the str_lower (to remove case-sensitive words), str_replace_all (to get rid of punctuation for easier wrangling)), and str_length(to compute and scan strings) to conduct my operations.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># List of words to exclude (they do not offer much if included)</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>exclude_words <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"you"</span>, <span class="st">"the"</span>, <span class="st">"to"</span>, <span class="st">"and"</span>, <span class="st">"a"</span>, <span class="st">"for"</span>, <span class="st">"on"</span>, <span class="st">"of"</span>)</span>
@@ -326,7 +326,7 @@ window.Quarto = {
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">text =</span> <span class="fu">str_replace_all</span>(text, <span class="st">"[^a-z</span><span class="sc">\\</span><span class="st">s]"</span>, <span class="st">""</span>),  <span class="co"># Remove punctuation</span></span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">text_length =</span> <span class="fu">str_length</span>(text))  <span class="co"># Compute tweet length</span></span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Tokenize, filter out specific words, and count words</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Tokenize, filter out specific words, and count words (learned how to do this part outside of class)</span></span>
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>word_counts <span class="ot">&lt;-</span> tweets_clean <span class="sc">|&gt;</span></span>
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, text) <span class="sc">|&gt;</span></span>
 <span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(word, <span class="st">"(?&lt;!</span><span class="sc">\\</span><span class="st">b(?:you|the|to|and|a|for|on|of)</span><span class="sc">\\</span><span class="st">b)"</span>))  <span class="sc">|&gt;</span></span>
@@ -400,19 +400,19 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>These were Obama’s most used words in his tweets. “We” was the most used word followed by “in” and “our”. What might be learned from this was the Obama used his Twitter as a mechanism to advocate for Americans and for the world. The collectivist words used helped illustrate that narrative, and it’s very cool to see that unity. This could be attributed to the ground breaking legislation and speechs combating the subsequent racial and gender injustice in the United States during his most active streak in the summer of 2015 and throughout the timeframe as a whole. Some words that stood out to me was “American”, “All”, and “Today” which further drives the narrative of unity spurred throughout his presidency.</p>
+<p>These were Obama’s most used words in his tweets. “We” was the most used word followed by “in” and “our”. What might be learned from this was the Obama used his Twitter as a mechanism to advocate for Americans and for the world. The collectivist words used helped illustrate that narrative, and it’s very cool to see that unity. This could be attributed to the ground breaking legislation and speeches combating the subsequent racial and gender injustice in the United States during his most active streak in the summer of 2015 and throughout the timeframe as a whole. Some words that stood out to me was “American” (again), “All”, and “Today” which further drives the narrative of unity spurred throughout his presidency.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"Obama writing.jpg"</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Obama writing.jpg" class="img-fluid figure-img"></p>
+<p><img src="Obama writing.jpg" class="img-fluid figure-img" width="196"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Part 3: Insights (What can we learn from this?)</p>
-<p>From understanding these graphs and the words picked a part from Obama’s tweets, we can see an overaching narrative of unity and national pride throughout the latter end of this President’s career in office. The use of social media was implemented early in his career in office. During times like this, it is important to see how a public offical should be using social media as a bridge between indifference and not as a tool for division.</p>
+<p>From understanding these graphs and the words picked a part from Obama’s tweets, we can see an over-aching narrative of unity and national pride throughout the latter end of this President’s career in office. The use of social media was implemented early in his career in office. During times like this, it is important to see how a public offical should be using social media as a bridge between indifference and not as a tool for division.</p>
 <p>SOURCES:</p>
 <p>Obama Presidential Library. “Archived White House Websites and Social Media.” Barack Obama Presidential Library, National Archives and Records Administration, https://www.obamalibrary.gov/digital-research-room/archived-white-house-websites-and-social-media. Accessed 4 Mar.&nbsp;2025.</p>
 <p>Wellford, Rachel. “Trump, Clinton and the Top 10 Political Stories of 2015.” PBS NewsHour, 28 Dec.&nbsp;2015, https://www.pbs.org/newshour/nation/trump-clinton-and-the-top-10-political-stories-of-2015.</p>
