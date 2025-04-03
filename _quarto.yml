@@ -17,7 +17,7 @@ website:
           - text: "Obama Tweet"
             href: Obama Tweet.html
           - text: "Chick Premutation"
-            href: Chick Premutation.html
+            href: Chick_Premutation.html
 
 format:
   html:
