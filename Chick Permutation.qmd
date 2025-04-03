@@ -1,5 +1,5 @@
 ---
-title: "Chick Premutation"
+title: "Chick Permutation"
 author: "Daniel Coker"
 format: html
 execute:
@@ -25,18 +25,24 @@ Here is the permutation test:
 chick_data <- ChickWeight |> 
   filter(Time == max(Time)) 
 
-# Keep only Diet 1 and Diet 4
+#Keep only Diet 1 & 4
 chick_data_filtered <- chick_data |> 
   filter(Diet %in% c(1, 4))
 
-# Compute observed difference in means using map_dbl()
-obs_diff <- chick_data_filtered |> 
-  group_by(Diet) |> 
-  summarize(mean_weight = mean(weight), .groups = "drop") |> 
-  summarize(diff = diff(mean_weight)) |> 
-  pull(diff)
+#Function to compute difference in means
+compute_obs_diff <- function(data, diet1, diet2) {
+  data |> 
+    filter(Diet %in% c(diet1, diet2)) |> 
+    group_by(Diet) |> 
+    summarize(mean_weight = mean(weight), .groups = "drop") |> 
+    summarize(diff = diff(mean_weight)) |> 
+    pull(diff)
+}
 
-# Permutation test using map()
+#Compute observed difference in means
+obs_diff_value <- compute_obs_diff(chick_data_filtered, diet1 = 1, diet2 = 4)
+
+#Permutation tet
 set.seed(47)
 perm_results <- chick_data_filtered |> 
   specify(weight ~ Diet) |> 
@@ -44,20 +50,19 @@ perm_results <- chick_data_filtered |>
   generate(reps = 4700, type = "permute") |> 
   calculate(stat = "diff in means", order = c("1", "4"))
 
-# Compute p-value using map_dbl()
-p_value <- mean(map_dbl(perm_results$stat, ~ .x >= obs_diff))
+p_value <- mean(map_dbl(perm_results$stat, ~ .x >= obs_diff_value))
 
-# Plot null distribution
+#Plot null distribution
 ggplot(perm_results, aes(x = stat)) +
   geom_histogram(binwidth = 5, fill = "lightgreen", color = "black") +
-  geom_vline(xintercept = obs_diff, color = "red", linetype = "dashed") +
+  geom_vline(xintercept = obs_diff_value, color = "red", linetype = "dashed") +
   ggtitle("Null Distribution") +
   xlab("Difference in Mean Weight") +
   ylab("Frequency")
 
-p_value  # Print p-value
+p_value  
 ```
-For my project, I first filtered out all the other data I was not using, only keeping my chick's weights and diets 1 and 4. Then, I computed the observed difference from the mean of weight between diet 1 and 4. Using this, I then generate 4,700 premutation samples all using a different premutation for my test. From this, I then took the p-value of the premutation tests, giving me a low p-value of ~.0066 (sidenote: the p-value would have gone lower if I increased the repititions but chirp chirp). 
+For my project, I first filtered out all the other data I was not using, only keeping my chick's weights and diets 1 and 4. Then, I computed the observed difference from the mean of weight between diet 1 and 4. Using this, I then generate 4,700 permutation samples all using a different premutation for my test. From this, I then took the p-value of the premutation tests, giving me a low p-value of ~.0066 (sidenote: the p-value would have gone lower if I increased the repititions but chirp chirp). 
 
 The null distribution histogram visualizes the differences in mean weight between diet 1 and 4 under the $H_0$ assuming it is true. Each bar represents the frequence of a particular difference in means across our 4,700 permutation samples. The red dashed line represents the observed difference in means from the actual dataset, showing how extreme our observed results is compared to what would be expected by chance.
 
