@@ -16,8 +16,8 @@ website:
             href: Water Security.html
           - text: "Obama Tweet"
             href: Obama Tweet.html
-          - text: "Chick Premutation"
-            href: Chick_Premutation.html
+          - text: "Chick Permutation"
+            href: Chick_Permutation.html
 
 format:
   html:
