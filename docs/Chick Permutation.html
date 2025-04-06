@@ -174,8 +174,8 @@ window.Quarto = {
  <span class="dropdown-text">Obama Tweet</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./Chick_Premutation.html">
- <span class="dropdown-text">Chick Premutation</span></a>
+    <a class="dropdown-item" href="./Chick_Permutation.html">
+ <span class="dropdown-text">Chick Permutation</span></a>
   </li>  
     </ul>
   </li>
@@ -284,7 +284,7 @@ window.Quarto = {
 </div>
 </div>
 <p>For my project, I first filtered out all the other data I was not using, only keeping my chick’s weights and diets 1 and 4. Then, I computed the observed difference from the mean of weight between diet 1 and 4. Using this, I then generate 4,700 permutation samples all using a different premutation for my test. From this, I then took the p-value of the premutation tests, giving me a low p-value of ~.0066 (sidenote: the p-value would have gone lower if I increased the repititions but chirp chirp).</p>
-<p>The null distribution histogram visualizes the differences in mean weight between diet 1 and 4 under the <span class="math inline">\(H_0\)</span> assuming it is true. Each bar represents the frequence of a particular difference in means across our 4,700 permutation samples. The red dashed line represents the observed difference in means from the actual dataset, showing how extreme our observed results is compared to what would be expected by chance.</p>
+<p>The null distribution histogram visualizes the differences in mean weight between diet 1 and 4 under the <span class="math inline">\(H_0\)</span> assuming it is true. Each bar represents the frequency of a particular difference in means across our 4,700 permutation samples. The red dashed line represents the observed difference in means from the actual dataset, showing how extreme having a result that fulfills the <span class="math inline">\(H_0\)</span> is.</p>
 <p>It is clear that the p-value of ~.0066 suggest that diet and a chick’s weight are significantly related. Since our observed difference line (dashed red line) is near the far-right tail, there is a very unlikely chance that this would occur randomly, thus, we can disregard the <span class="math inline">\(H_0\)</span>. There is a clear relationship between a high-protien diet and weight.</p>
 
 
