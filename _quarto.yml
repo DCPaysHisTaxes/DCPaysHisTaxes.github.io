@@ -18,6 +18,8 @@ website:
             href: Obama Tweet.html
           - text: "Chick Permutation"
             href: Chick_Permutation.html
+          - text: "Data Science Ethics"
+            href: Data Science Ethics.html
 
 format:
   html:
