@@ -3,5 +3,34 @@ title: "Data Science Ethics"
 author: "Daniel Coker"
 date: 4/16/25
 ---
+References: 
+
+Xiao, T., & Ma, Y. (2021). A Letter to the Journal of Statistics and Data Science Education — A Call for Review of “OkCupid Data for Introductory Statistics and Data Science Courses” by Albert Y. Kim and Adriana Escobedo-Land. Journal of Statistics and Data Science Education, 29(2), 214–215. https://doi.org/10.1080/26939169.2021.1930812
+
+Kirkegaard, E. O. W., & Bjerrekær, J. D. (2016). The OKCupid dataset: A very large public dataset of dating site users. Open Differential Psychology. https://doi.org/10.26775/odp.2016.11.03
+
+Zimmer, M. (2018). Addressing Conceptual Gaps in Big Data Research Ethics: An Application of Contextual Integrity. Social Media + Society. Retrieved from https://journals.sagepub.com/doi/full/10.1177/2056305118768300
 
 Introduction:
+
+In the article "A Letter to the Journal of Statistics and Data Science Education - A call for Review of 'OkCupid Data for Introductory Statistics and Data Science Courses'" by Xiao and Ma, the ethical dilemma of potentially revealing and analyzing confidental data is posed. For context, this article was writen in response to "OKCupid Data for Introductory Statistics and Data Science Courses" by Kim  and Escobedo-Land where they aimed at using the OKCupid data as a teaching tool for data science and statistic coursers. However, Xiao and Ma criticize their notion as the use of identity revealing variables that could pose a confidental risk and harm inviduals. Kim and Escobedo-Land based their original writing off the controversy 2016 publication "The OKCupid dataset: A very large public dataset of dating site users" writen by Emil O. W. Kirkegaard and Julius D. Bjerrekær where they published over 70,000 users' data which includes gender preferences, age, username, geographic location, religion, etc. with intentions of the dataset being used for various research proposes. One risk they addressed was certain variables including time and geopgraphic information about indivduals were included and not censored. This could potentially cause others' privacy to feel encrouched. For intial solutions, they propose introducing noise (which in this case would be changing, moving, or removing words) to better secure people's information within the dataset and study as a whole. 
+
+Another correlate article, "Addressing Conceptual Gaps in Big Data Research Ethics: An Application of Contextual Integrity" by Michael Zimmer also tackles the dilemna of "public" sensitive data being available for research and for the masses. He criticizes Kirkegaard and Bjerrekær stating they violated not only established research norms but also guidelines surrounding online dating by including variables such as geographic location, usernames, and even gender preference in their intial dataset. Likewise with Xiao and Ma, he further emphasizes and stresses that not censoring these and other related variables would have convey personal information. This article discusses more on the unethical research review that the OKCupid dataset violates. 
+
+Questions: 
+
+1. What is the permission structure of using the data? Was it followed? 
+
+The data used in the initial study lacked a clear permission structure. Both articles describe how the dataset was scraped and repurposed without noticing the individuals involved. OKCupid does include in their user agreements that some public info would be shared; however, using the data which included usernames and gender-preference without checking with inviduals to see if it okay goes against the IRB and legislation guidelines and breaks traditional research norms. 
+
+2. Is the data identifiable? All of it? Some of it? In what way? Are the data sufficiently anonymized or old to be free of ethical concerns? Is anonymity guaranteed?
+
+It is clearly stated between the two articles that some data and variable were idenitifiable. Variables including usernames, dating preferences, geographic location, time, and age were all made available to the public. It seems that there was little or no sufficient anoymizatio efforts that took place when constructing the data. While the dataset might've been constructed before new guidelines, it still goes against many research norms. 
+
+3.What was the data collection process? Were the observations collected ethically? Are there missing observations?
+
+The main OKCupid dataset that caused a lot of these issues took over 70,000 OkCupid users data from OkCupid and scrubbed the data to be used for regressional uses like checking cognitive ability through categorical questions asked by OKCupid in relation to other variables (age, gender-preference, location, etc.) in the constructed dataset. The intial researhers of the dataset stated that almost every user in the dataset had some missing data/observation too. I would like to add that if other researchers still wanted to use this dataset but maintain confidentiality, then they could definitely implemented some data masking, make the categorical variables into dummy variables, or just remove the free response questions all together. Additionally, researchers could release the data only through secure, access-controlled environments that require Institutional Review Board (IRB) approval or equivalent oversight to ensure their analysis followed approved privacy guidelines.
+
+4. Were the data made publicly available?
+
+The data was, in fact, made public, hence the initial controversy surrounding its release. The exposure of all of these users' data—even if OkCupid's datasets are technically accessible to users on the platform—still shouldn't have been made public without further oversight. Making the dataset downloadable by anyone, without restriction or review, increased the likelihood of misuse, re-identification, and harm to the individuals involved. The lack of gatekeeping removed any control over who accessed the data and how it might be used, whether for academic purposes or otherwise. As Michael Zimmer argues, public availability does not override the ethical responsibility to consider context, consent, and privacy. Without anonymization or ethical review, the dataset’s release violated not only OkCupid users’ expectations of privacy but also broader norms in data science research regarding participant protection.  
