@@ -1,5 +1,5 @@
 ---
-title: "Data Science Ethics"
+title: "Data Science Ethics Review on OKCupid"
 author: "Daniel Coker"
 date: 4/16/25
 ---
