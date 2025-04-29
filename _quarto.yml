@@ -20,8 +20,8 @@ website:
             href: Chick Permutation.html
           - text: "Data Science Ethics"
             href: Data Science Ethics.html
-          - text: "Standford Open Policing Project Regression"
-            href: Standford Open Policing Project.html
+          - text: "Stanford Open Policing Project Regression"
+            href: Stanford Open Policing Project.html
 
 format:
   html:
