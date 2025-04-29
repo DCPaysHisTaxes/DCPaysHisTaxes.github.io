@@ -17,9 +17,11 @@ website:
           - text: "Obama Tweet"
             href: Obama Tweet.html
           - text: "Chick Permutation"
-            href: Chick_Permutation.html
+            href: Chick Permutation.html
           - text: "Data Science Ethics"
             href: Data Science Ethics.html
+          - text: "Standford Open Policing Project Regression"
+            href: Standford Open Policing Project.html
 
 format:
   html:

@@ -1,0 +1,143 @@
+---
+title: "Stanford Open Policing Project Regression"
+author: "Daniel Coker" 
+date: "4/27/25"
+format: html
+execute: 
+ warning: false
+ message: false
+---
+
+We are analyzing trends in traffic stops in three California cities (San Francisco, Oakland, San Jose) using the Stanford Open Policing Project database. Specifically, we will explore (1) how arrest rates have changed over time from 2014 to 2017, and (2) whether different races experience different search rates across cities. This analysis uses SQL queries to summarize and wrangle the data directly from the database.
+
+```{r}
+library(DBI)
+library(RMariaDB)
+
+con_traffic <- DBI::dbConnect(
+
+  RMariaDB::MariaDB(),
+
+  dbname = "traffic",
+
+  host = Sys.getenv("TRAFFIC_HOST"),
+
+  user = Sys.getenv("TRAFFIC_USER"),
+
+  password = Sys.getenv("TRAFFIC_PWD")
+)
+```
+
+
+
+Arrest Rates Over Time per City
+
+```{sql, connection=con_traffic, output.var="arrest_trend"} 
+SELECT
+    city,
+    stop_year,
+    ROUND(100.0 * AVG(CASE WHEN arrest_made THEN 1 ELSE 0 END), 2) AS arrest_rate
+FROM (
+    SELECT
+        'San Francisco' AS city,
+        YEAR(date) AS stop_year,
+        arrest_made
+    FROM ca_san_francisco_2020_04_01
+    WHERE YEAR(date) BETWEEN 2014 AND 2017
+
+    UNION ALL
+
+    SELECT
+        'Oakland' AS city,
+        YEAR(date) AS stop_year,
+        arrest_made
+    FROM ca_oakland_2020_04_01
+    WHERE YEAR(date) BETWEEN 2014 AND 2017
+
+    UNION ALL
+
+    SELECT
+        'San Jose' AS city,
+        YEAR(date) AS stop_year,
+        arrest_made
+    FROM ca_san_jose_2020_04_01
+    WHERE YEAR(date) BETWEEN 2014 AND 2017
+) AS combined
+GROUP BY city, stop_year
+ORDER BY city, stop_year;
+```
+
+```{r} 
+library(ggplot2)
+
+ggplot(arrest_trend, aes(x = stop_year, y = arrest_rate, color = city)) +
+  geom_line(size = 1.2) +
+  geom_point(size = 2) +
+  labs(title = "Arrest Rate Trends (2014-2017)", x = "Year", y = "Arrest Rate (%)", color = "City") +
+  theme_minimal()
+```
+
+The plot above shows how arrest rates changed from 2014 to 2017 in San Francisco, Oakland, and San Jose. Oakland consistently has the highest arrest rates, but we see a slight decline after 2016 in all three cities, suggesting potential impacts of police reform efforts around that time.
+
+Search Rates by Race & City 
+
+```{sql, connection= con_traffic, output.var="race_search"} 
+SELECT
+    city,
+    subject_race,
+    ROUND(100.0 * AVG(CASE WHEN search_conducted THEN 1 ELSE 0 END), 2) AS search_rate
+FROM (
+    SELECT
+        'San Francisco' AS city,
+        subject_race,
+        search_conducted
+    FROM ca_san_francisco_2020_04_01
+    WHERE YEAR(date) BETWEEN 2014 AND 2017
+
+    UNION ALL
+
+    SELECT
+        'Oakland' AS city,
+        subject_race,
+        search_conducted
+    FROM ca_oakland_2020_04_01
+    WHERE YEAR(date) BETWEEN 2014 AND 2017
+
+    UNION ALL
+
+    SELECT
+        'San Jose' AS city,
+        subject_race,
+        search_conducted
+    FROM ca_san_jose_2020_04_01
+    WHERE YEAR(date) BETWEEN 2014 AND 2017
+) AS combined
+GROUP BY city, subject_race
+ORDER BY city, search_rate DESC;
+```
+
+```{r} 
+library(ggplot2)
+
+ggplot(race_search, aes(x = reorder(subject_race, -search_rate), y = search_rate, fill = city)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Search Rates by Race (2014-2017)", x = "Race", y = "Search Rate (%)", fill = "City") +
+  theme_minimal()
+```
+
+The bar plot shows that Black and Hispanic drivers have significantly higher search rates compared to White and Asian drivers across all three cities. Oakland exhibits the largest disparities. While San Jose shows slightly lower gaps, disparities remain clear.
+
+Some concluding points: 
+
+1. Arrest rates were highest in Oakland but declined afte 2016
+
+2. Search ratres were consistently higher for Black and Hispanic people across the Bay (San Francisco, Oakland, and San Jose)
+
+3. Despite some reforms and legislation, inequalities persisted throughout 2014-2017
+
+References: 
+
+Data from: Stanford Open Policing Project — https://openpolicing.stanford.edu/data/
+
+Citation:
+Pierson, Emma, Camelia Simoiu, Jan Overgoor, Sam Corbett-Davies, Daniel Jenson, Amy Shoemaker, Vignesh Ramachandran, et al. 2020. “A Large-Scale Analysis of Racial Disparities in Police Stops Across the United States.” Nature Human Behaviour, 1–10.
