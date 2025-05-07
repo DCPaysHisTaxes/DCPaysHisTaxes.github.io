@@ -14,8 +14,8 @@ This analysis explores trends in traffic stops across three major California cit
 
 The primary goals of this analysis are to answer two critical questions:
 
-1. **How have arrest rates changed over time (2014-2017) in these cities?**
-2. **Do search rates differ by race across these cities?**
+1.  **How have arrest rates changed over time (2014-2017) in these cities?**
+2.  **Do search rates differ by race across these cities?**
 
 This analysis is motivated by ongoing discussions about racial disparities in law enforcement, which remain a significant social and political issue in the United States. Understanding arrest and search rate trends is essential for identifying systemic inequalities and assessing the impact of policy reforms. This analysis not only reveals the presence of disparities but also allows us to examine how these disparities have persisted or evolved over time.
 
@@ -26,6 +26,7 @@ The Stanford Open Policing Project database is one of the largest public dataset
 ```{r}
 library(DBI)
 library(RMariaDB)
+library(ggplot2)
 
 con_traffic <- DBI::dbConnect(
   RMariaDB::MariaDB(),
@@ -40,7 +41,7 @@ con_traffic <- DBI::dbConnect(
 
 To explore changes in arrest rates over time, we calculate the annual arrest rate for each city between 2014 and 2017. Arrest rates are calculated as the percentage of stops that resulted in an arrest.
 
-```{sql, connection=con_traffic, output.var="arrest_trend"} 
+```{sql, connection=con_traffic, output.var="arrest_trend"}
 SELECT city, stop_year, ROUND(100.0 * AVG(CASE WHEN arrest_made THEN 1 ELSE 0 END), 2) AS arrest_rate
 FROM (
   SELECT 'San Francisco' AS city, YEAR(date) AS stop_year, arrest_made
@@ -77,7 +78,7 @@ The plot shows that arrest rates were consistently highest in Oakland, but all t
 
 We further explore racial disparities in police stops by calculating the search rates for different racial groups in each city. Search rates indicate the percentage of stops that led to a search of the vehicle or individual.
 
-```{sql, connection= con_traffic, output.var="race_search"} 
+```{sql, connection= con_traffic, output.var="race_search"}
 SELECT city, subject_race, ROUND(100.0 * AVG(CASE WHEN search_conducted THEN 1 ELSE 0 END), 2) AS search_rate
 FROM (
   SELECT 'San Francisco' AS city, subject_race, search_conducted
@@ -113,13 +114,13 @@ The bar plot highlights significant racial disparities in search rates. Black an
 
 This analysis reveals several key insights:
 
-1. **Arrest rates were consistently highest in Oakland**, but began to decline after 2016. This decline may be linked to police reform efforts or changing enforcement priorities.
-2. **Racial disparities in search rates are evident**, with Black and Hispanic drivers consistently experiencing higher search rates than White and Asian drivers across all three cities. Oakland shows the most significant disparities, raising questions about biased policing practices.
-3. **Despite some reforms, racial disparities persisted throughout 2014-2017**, indicating the need for continued monitoring, further policy evaluation, and potential reforms to address inequality.
+1.  **Arrest rates were consistently highest in Oakland**, but began to decline after 2016. This decline may be linked to police reform efforts or changing enforcement priorities.
+2.  **Racial disparities in search rates are evident**, with Black and Hispanic drivers consistently experiencing higher search rates than White and Asian drivers across all three cities. Oakland shows the most significant disparities, raising questions about biased policing practices.
+3.  **Despite some reforms, racial disparities persisted throughout 2014-2017**, indicating the need for continued monitoring, further policy evaluation, and potential reforms to address inequality.
 
 These findings provide evidence of persistent racial inequalities in policing, underscoring the importance of data-driven policy evaluation to promote fairer law enforcement practices.
 
 ### References
 
-- Stanford Open Policing Project — https://openpolicing.stanford.edu/data/
-- Pierson, Emma, et al. 2020. “A Large-Scale Analysis of Racial Disparities in Police Stops Across the United States.” Nature Human Behaviour, 1–10.
+-   Stanford Open Policing Project — https://openpolicing.stanford.edu/data/
+-   Pierson, Emma, et al. 2020. “A Large-Scale Analysis of Racial Disparities in Police Stops Across the United States.” Nature Human Behaviour, 1–10.
