@@ -170,11 +170,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#data-connection-and-setup" id="toc-data-connection-and-setup" class="nav-link" data-scroll-target="#data-connection-and-setup">Data Connection and Setup</a></li>
+  <li><a href="#arrest-rates-over-time-per-city" id="toc-arrest-rates-over-time-per-city" class="nav-link" data-scroll-target="#arrest-rates-over-time-per-city">Arrest Rates Over Time per City</a></li>
+  <li><a href="#search-rates-by-race-city" id="toc-search-rates-by-race-city" class="nav-link" data-scroll-target="#search-rates-by-race-city">Search Rates by Race &amp; City</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a>
+  <ul class="collapse">
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content column-page-left" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -183,7 +196,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div class="quarto-title-meta column-page">
+<div class="quarto-title-meta column-page-left">
 
     <div>
     <div class="quarto-title-meta-heading">Author</div>
@@ -207,58 +220,56 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>We are analyzing trends in traffic stops in three California cities (San Francisco, Oakland, San Jose) using the Stanford Open Policing Project database. Specifically, we will explore (1) how arrest rates have changed over time from 2014 to 2017, and (2) whether different races experience different search rates across cities. This analysis uses SQL queries to summarize and wrangle the data directly from the database.</p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>This analysis explores trends in traffic stops across three California cities (San Francisco, Oakland, San Jose) using data from the Stanford Open Policing Project database. The primary goals of this analysis are to examine:</p>
+<ul>
+<li>How arrest rates changed over time (2014-2017).</li>
+<li>Whether search rates differ by race across the three cities.</li>
+</ul>
+<p>These cities were chosen due to their diverse populations and significant differences in policing practices. The analysis uses SQL to directly query and wrangle the data, ensuring efficient and accurate results.</p>
+</section>
+<section id="data-connection-and-setup" class="level2">
+<h2 class="anchored" data-anchor-id="data-connection-and-setup">Data Connection and Setup</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RMariaDB)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>con_traffic <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  RMariaDB<span class="sc">::</span><span class="fu">MariaDB</span>(),</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">dbname =</span> <span class="st">"traffic"</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">host =</span> <span class="fu">Sys.getenv</span>(<span class="st">"TRAFFIC_HOST"</span>),</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">user =</span> <span class="fu">Sys.getenv</span>(<span class="st">"TRAFFIC_USER"</span>),</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">password =</span> <span class="fu">Sys.getenv</span>(<span class="st">"TRAFFIC_PWD"</span>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  RMariaDB<span class="sc">::</span><span class="fu">MariaDB</span>(),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">dbname =</span> <span class="st">"traffic"</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">host =</span> <span class="fu">Sys.getenv</span>(<span class="st">"TRAFFIC_HOST"</span>),</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">user =</span> <span class="fu">Sys.getenv</span>(<span class="st">"TRAFFIC_USER"</span>),</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">password =</span> <span class="fu">Sys.getenv</span>(<span class="st">"TRAFFIC_PWD"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Arrest Rates Over Time per City</p>
+</section>
+<section id="arrest-rates-over-time-per-city" class="level2">
+<h2 class="anchored" data-anchor-id="arrest-rates-over-time-per-city">Arrest Rates Over Time per City</h2>
 <div class="cell" data-output.var="arrest_trend">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    city,</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    stop_year,</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ROUND</span>(<span class="fl">100.0</span> <span class="op">*</span> <span class="fu">AVG</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> arrest_made <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>), <span class="dv">2</span>) <span class="kw">AS</span> arrest_rate</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> (</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">'San Francisco'</span> <span class="kw">AS</span> city,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">YEAR</span>(<span class="dt">date</span>) <span class="kw">AS</span> stop_year,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        arrest_made</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> ca_san_francisco_2020_04_01</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span> <span class="dt">YEAR</span>(<span class="dt">date</span>) <span class="kw">BETWEEN</span> <span class="dv">2014</span> <span class="kw">AND</span> <span class="dv">2017</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNION</span> <span class="kw">ALL</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Oakland'</span> <span class="kw">AS</span> city,</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        <span class="dt">YEAR</span>(<span class="dt">date</span>) <span class="kw">AS</span> stop_year,</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        arrest_made</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> ca_oakland_2020_04_01</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="st">'San Francisco'</span> <span class="kw">AS</span> city, <span class="dt">YEAR</span>(<span class="dt">date</span>) <span class="kw">AS</span> stop_year, arrest_made</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> ca_san_francisco_2020_04_01</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span> <span class="dt">YEAR</span>(<span class="dt">date</span>) <span class="kw">BETWEEN</span> <span class="dv">2014</span> <span class="kw">AND</span> <span class="dv">2017</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNION</span> <span class="kw">ALL</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="st">'Oakland'</span> <span class="kw">AS</span> city, <span class="dt">YEAR</span>(<span class="dt">date</span>) <span class="kw">AS</span> stop_year, arrest_made</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> ca_oakland_2020_04_01</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span> <span class="dt">YEAR</span>(<span class="dt">date</span>) <span class="kw">BETWEEN</span> <span class="dv">2014</span> <span class="kw">AND</span> <span class="dv">2017</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNION</span> <span class="kw">ALL</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="st">'San Jose'</span> <span class="kw">AS</span> city, <span class="dt">YEAR</span>(<span class="dt">date</span>) <span class="kw">AS</span> stop_year, arrest_made</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> ca_san_jose_2020_04_01</span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span> <span class="dt">YEAR</span>(<span class="dt">date</span>) <span class="kw">BETWEEN</span> <span class="dv">2014</span> <span class="kw">AND</span> <span class="dv">2017</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNION</span> <span class="kw">ALL</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">'San Jose'</span> <span class="kw">AS</span> city,</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        <span class="dt">YEAR</span>(<span class="dt">date</span>) <span class="kw">AS</span> stop_year,</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>        arrest_made</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> ca_san_jose_2020_04_01</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span> <span class="dt">YEAR</span>(<span class="dt">date</span>) <span class="kw">BETWEEN</span> <span class="dv">2014</span> <span class="kw">AND</span> <span class="dv">2017</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>) <span class="kw">AS</span> combined</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> city, stop_year</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> city, stop_year;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>) <span class="kw">AS</span> combined</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> city, stop_year</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> city, stop_year;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
@@ -266,8 +277,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(arrest_trend, <span class="fu">aes</span>(<span class="at">x =</span> stop_year, <span class="at">y =</span> arrest_rate, <span class="at">color =</span> city)) <span class="sc">+</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Arrest Rate Trends (2014-2017)"</span>, <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Arrest Rate (%)"</span>, <span class="at">color =</span> <span class="st">"City"</span>) <span class="sc">+</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Arrest Rate Trends (2014-2017)"</span>, <span class="at">x =</span> <span class="st">"Year (2014-2017)"</span>, <span class="at">y =</span> <span class="st">"Arrest Rate (%)"</span>, <span class="at">color =</span> <span class="st">"City"</span>) <span class="sc">+</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -276,49 +287,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>The plot above shows how arrest rates changed from 2014 to 2017 in San Francisco, Oakland, and San Jose. Oakland consistently has the highest arrest rates, but we see a slight decline after 2016 in all three cities, suggesting potential impacts of police reform efforts around that time.</p>
-<p>Search Rates by Race &amp; City</p>
+</section>
+<section id="search-rates-by-race-city" class="level2">
+<h2 class="anchored" data-anchor-id="search-rates-by-race-city">Search Rates by Race &amp; City</h2>
 <div class="cell" data-output.var="race_search">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    city,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    subject_race,</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ROUND</span>(<span class="fl">100.0</span> <span class="op">*</span> <span class="fu">AVG</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> search_conducted <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>), <span class="dv">2</span>) <span class="kw">AS</span> search_rate</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> (</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">'San Francisco'</span> <span class="kw">AS</span> city,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        subject_race,</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        search_conducted</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> ca_san_francisco_2020_04_01</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span> <span class="dt">YEAR</span>(<span class="dt">date</span>) <span class="kw">BETWEEN</span> <span class="dv">2014</span> <span class="kw">AND</span> <span class="dv">2017</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNION</span> <span class="kw">ALL</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Oakland'</span> <span class="kw">AS</span> city,</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        subject_race,</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        search_conducted</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> ca_oakland_2020_04_01</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="st">'San Francisco'</span> <span class="kw">AS</span> city, subject_race, search_conducted</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> ca_san_francisco_2020_04_01</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span> <span class="dt">YEAR</span>(<span class="dt">date</span>) <span class="kw">BETWEEN</span> <span class="dv">2014</span> <span class="kw">AND</span> <span class="dv">2017</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNION</span> <span class="kw">ALL</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="st">'Oakland'</span> <span class="kw">AS</span> city, subject_race, search_conducted</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> ca_oakland_2020_04_01</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span> <span class="dt">YEAR</span>(<span class="dt">date</span>) <span class="kw">BETWEEN</span> <span class="dv">2014</span> <span class="kw">AND</span> <span class="dv">2017</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNION</span> <span class="kw">ALL</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span> <span class="st">'San Jose'</span> <span class="kw">AS</span> city, subject_race, search_conducted</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> ca_san_jose_2020_04_01</span>
 <span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span> <span class="dt">YEAR</span>(<span class="dt">date</span>) <span class="kw">BETWEEN</span> <span class="dv">2014</span> <span class="kw">AND</span> <span class="dv">2017</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">UNION</span> <span class="kw">ALL</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">SELECT</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">'San Jose'</span> <span class="kw">AS</span> city,</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>        subject_race,</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        search_conducted</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="kw">FROM</span> ca_san_jose_2020_04_01</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">WHERE</span> <span class="dt">YEAR</span>(<span class="dt">date</span>) <span class="kw">BETWEEN</span> <span class="dv">2014</span> <span class="kw">AND</span> <span class="dv">2017</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>) <span class="kw">AS</span> combined</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> city, subject_race</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> city, search_rate <span class="kw">DESC</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>) <span class="kw">AS</span> combined</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> city, subject_race</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="kw">ORDER</span> <span class="kw">BY</span> city, search_rate <span class="kw">DESC</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(race_search, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(subject_race, <span class="sc">-</span>search_rate), <span class="at">y =</span> search_rate, <span class="at">fill =</span> city)) <span class="sc">+</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Search Rates by Race (2014-2017)"</span>, <span class="at">x =</span> <span class="st">"Race"</span>, <span class="at">y =</span> <span class="st">"Search Rate (%)"</span>, <span class="at">fill =</span> <span class="st">"City"</span>) <span class="sc">+</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(race_search, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(subject_race, <span class="sc">-</span>search_rate), <span class="at">y =</span> search_rate, <span class="at">fill =</span> city)) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Search Rates by Race (2014-2017)"</span>, <span class="at">x =</span> <span class="st">"Race"</span>, <span class="at">y =</span> <span class="st">"Search Rate (%)"</span>, <span class="at">fill =</span> <span class="st">"City"</span>) <span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -327,18 +328,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>The bar plot shows that Black and Hispanic drivers have significantly higher search rates compared to White and Asian drivers across all three cities. Oakland exhibits the largest disparities. While San Jose shows slightly lower gaps, disparities remain clear.</p>
-<p>Some concluding points:</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>This analysis reveals the following key insights:</p>
 <ol type="1">
-<li><p>Arrest rates were highest in Oakland but declined afte 2016</p></li>
-<li><p>Search ratres were consistently higher for Black and Hispanic people across the Bay (San Francisco, Oakland, and San Jose)</p></li>
-<li><p>Despite some reforms and legislation, inequalities persisted throughout 2014-2017</p></li>
+<li>Arrest rates were highest in Oakland but declined after 2016, potentially reflecting police reform efforts.</li>
+<li>Search rates were consistently higher for Black and Hispanic drivers across all three cities, with Oakland showing the largest disparities.</li>
+<li>Despite some reforms, racial disparities persisted in search rates from 2014 to 2017.</li>
 </ol>
-<p>References:</p>
-<p>Data from: Stanford Open Policing Project — https://openpolicing.stanford.edu/data/</p>
-<p>Citation: Pierson, Emma, Camelia Simoiu, Jan Overgoor, Sam Corbett-Davies, Daniel Jenson, Amy Shoemaker, Vignesh Ramachandran, et al.&nbsp;2020. “A Large-Scale Analysis of Racial Disparities in Police Stops Across the United States.” Nature Human Behaviour, 1–10.</p>
+<section id="references" class="level3">
+<h3 class="anchored" data-anchor-id="references">References</h3>
+<ul>
+<li>Stanford Open Policing Project — https://openpolicing.stanford.edu/data/</li>
+<li>Pierson, Emma, et al.&nbsp;2020. “A Large-Scale Analysis of Racial Disparities in Police Stops Across the United States.” Nature Human Behaviour, 1–10.</li>
+</ul>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
