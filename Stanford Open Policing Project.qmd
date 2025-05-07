@@ -10,12 +10,16 @@ execute:
 
 ## Introduction
 
-This analysis explores trends in traffic stops across three California cities (San Francisco, Oakland, San Jose) using data from the Stanford Open Policing Project database. The primary goals of this analysis are to examine:
+This analysis explores trends in traffic stops across three major California cities—San Francisco, Oakland, and San Jose—using data from the Stanford Open Policing Project database. These cities were chosen due to their diverse populations, significant differences in law enforcement practices, and their status as major urban centers within California. By focusing on these three cities, we aim to capture a representative understanding of how policing practices vary across urban environments with distinct social and demographic compositions.
 
-- How arrest rates changed over time (2014-2017).
-- Whether search rates differ by race across the three cities.
+The primary goals of this analysis are to answer two critical questions:
 
-These cities were chosen due to their diverse populations and significant differences in policing practices. The analysis uses SQL to directly query and wrangle the data, ensuring efficient and accurate results.
+1. **How have arrest rates changed over time (2014-2017) in these cities?**
+2. **Do search rates differ by race across these cities?**
+
+This analysis is motivated by ongoing discussions about racial disparities in law enforcement, which remain a significant social and political issue in the United States. Understanding arrest and search rate trends is essential for identifying systemic inequalities and assessing the impact of policy reforms. This analysis not only reveals the presence of disparities but also allows us to examine how these disparities have persisted or evolved over time.
+
+The Stanford Open Policing Project database is one of the largest public datasets of police stops in the United States, making it an invaluable resource for assessing the impact of law enforcement practices on different communities. Through SQL queries and data visualization, we will investigate how these practices differ by race and city.
 
 ## Data Connection and Setup
 
@@ -34,35 +38,32 @@ con_traffic <- DBI::dbConnect(
 
 ## Arrest Rates Over Time per City
 
+To explore changes in arrest rates over time, we calculate the annual arrest rate for each city between 2014 and 2017. Arrest rates are calculated as the percentage of stops that resulted in an arrest.
+
 ```{sql, connection=con_traffic, output.var="arrest_trend"} 
-SELECT
-    city,
-    stop_year,
-    ROUND(100.0 * AVG(CASE WHEN arrest_made THEN 1 ELSE 0 END), 2) AS arrest_rate
+SELECT city, stop_year, ROUND(100.0 * AVG(CASE WHEN arrest_made THEN 1 ELSE 0 END), 2) AS arrest_rate
 FROM (
-    SELECT 'San Francisco' AS city, YEAR(date) AS stop_year, arrest_made
-    FROM ca_san_francisco_2020_04_01
-    WHERE YEAR(date) BETWEEN 2014 AND 2017
+  SELECT 'San Francisco' AS city, YEAR(date) AS stop_year, arrest_made
+  FROM ca_san_francisco_2020_04_01
+  WHERE YEAR(date) BETWEEN 2014 AND 2017
 
-    UNION ALL
+  UNION ALL
 
-    SELECT 'Oakland' AS city, YEAR(date) AS stop_year, arrest_made
-    FROM ca_oakland_2020_04_01
-    WHERE YEAR(date) BETWEEN 2014 AND 2017
+  SELECT 'Oakland' AS city, YEAR(date) AS stop_year, arrest_made
+  FROM ca_oakland_2020_04_01
+  WHERE YEAR(date) BETWEEN 2014 AND 2017
 
-    UNION ALL
+  UNION ALL
 
-    SELECT 'San Jose' AS city, YEAR(date) AS stop_year, arrest_made
-    FROM ca_san_jose_2020_04_01
-    WHERE YEAR(date) BETWEEN 2014 AND 2017
+  SELECT 'San Jose' AS city, YEAR(date) AS stop_year, arrest_made
+  FROM ca_san_jose_2020_04_01
+  WHERE YEAR(date) BETWEEN 2014 AND 2017
 ) AS combined
 GROUP BY city, stop_year
 ORDER BY city, stop_year;
 ```
 
 ```{r}
-library(ggplot2)
-
 ggplot(arrest_trend, aes(x = stop_year, y = arrest_rate, color = city)) +
   geom_line(size = 1.2) +
   geom_point(size = 2) +
@@ -70,29 +71,30 @@ ggplot(arrest_trend, aes(x = stop_year, y = arrest_rate, color = city)) +
   theme_minimal() + theme(text = element_text(size = 12))
 ```
 
+The plot shows that arrest rates were consistently highest in Oakland, but all three cities experienced a slight decline in arrest rates after 2016. This trend may suggest that policing practices were influenced by reforms or policy changes aimed at reducing arrests. Such changes could reflect shifts in law enforcement priorities, increased awareness of the need to reduce unnecessary arrests, or public pressure for accountability.
+
 ## Search Rates by Race & City
 
+We further explore racial disparities in police stops by calculating the search rates for different racial groups in each city. Search rates indicate the percentage of stops that led to a search of the vehicle or individual.
+
 ```{sql, connection= con_traffic, output.var="race_search"} 
-SELECT
-    city,
-    subject_race,
-    ROUND(100.0 * AVG(CASE WHEN search_conducted THEN 1 ELSE 0 END), 2) AS search_rate
+SELECT city, subject_race, ROUND(100.0 * AVG(CASE WHEN search_conducted THEN 1 ELSE 0 END), 2) AS search_rate
 FROM (
-    SELECT 'San Francisco' AS city, subject_race, search_conducted
-    FROM ca_san_francisco_2020_04_01
-    WHERE YEAR(date) BETWEEN 2014 AND 2017
+  SELECT 'San Francisco' AS city, subject_race, search_conducted
+  FROM ca_san_francisco_2020_04_01
+  WHERE YEAR(date) BETWEEN 2014 AND 2017
 
-    UNION ALL
+  UNION ALL
 
-    SELECT 'Oakland' AS city, subject_race, search_conducted
-    FROM ca_oakland_2020_04_01
-    WHERE YEAR(date) BETWEEN 2014 AND 2017
+  SELECT 'Oakland' AS city, subject_race, search_conducted
+  FROM ca_oakland_2020_04_01
+  WHERE YEAR(date) BETWEEN 2014 AND 2017
 
-    UNION ALL
+  UNION ALL
 
-    SELECT 'San Jose' AS city, subject_race, search_conducted
-    FROM ca_san_jose_2020_04_01
-    WHERE YEAR(date) BETWEEN 2014 AND 2017
+  SELECT 'San Jose' AS city, subject_race, search_conducted
+  FROM ca_san_jose_2020_04_01
+  WHERE YEAR(date) BETWEEN 2014 AND 2017
 ) AS combined
 GROUP BY city, subject_race
 ORDER BY city, search_rate DESC;
@@ -105,13 +107,17 @@ ggplot(race_search, aes(x = reorder(subject_race, -search_rate), y = search_rate
   theme_minimal() + theme(text = element_text(size = 12))
 ```
 
+The bar plot highlights significant racial disparities in search rates. Black and Hispanic drivers experienced consistently higher search rates compared to White and Asian drivers. Oakland displayed the highest disparities, with Black drivers facing a significantly higher likelihood of being searched. These results align with broader concerns about racial profiling in policing, suggesting that people of color are disproportionately subjected to searches, even if they are not more likely to possess contraband.
+
 ## Conclusion
 
-This analysis reveals the following key insights:
+This analysis reveals several key insights:
 
-1. Arrest rates were highest in Oakland but declined after 2016, potentially reflecting police reform efforts.
-2. Search rates were consistently higher for Black and Hispanic drivers across all three cities, with Oakland showing the largest disparities.
-3. Despite some reforms, racial disparities persisted in search rates from 2014 to 2017.
+1. **Arrest rates were consistently highest in Oakland**, but began to decline after 2016. This decline may be linked to police reform efforts or changing enforcement priorities.
+2. **Racial disparities in search rates are evident**, with Black and Hispanic drivers consistently experiencing higher search rates than White and Asian drivers across all three cities. Oakland shows the most significant disparities, raising questions about biased policing practices.
+3. **Despite some reforms, racial disparities persisted throughout 2014-2017**, indicating the need for continued monitoring, further policy evaluation, and potential reforms to address inequality.
+
+These findings provide evidence of persistent racial inequalities in policing, underscoring the importance of data-driven policy evaluation to promote fairer law enforcement practices.
 
 ### References
 
