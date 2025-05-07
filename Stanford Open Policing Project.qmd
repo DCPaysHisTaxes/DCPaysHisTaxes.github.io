@@ -73,7 +73,7 @@ ggplot(arrest_trend, aes(x = stop_year, y = arrest_rate, color = city)) +
   theme_minimal() + theme(text = element_text(size = 12))
 ```
 
-The plot shows that arrest rates were consistently highest in Oakland, but all three cities experienced a slight decline in arrest rates after 2016. This trend may suggest that policing practices were influenced by reforms or policy changes aimed at reducing arrests. Such changes could reflect shifts in law enforcement priorities, increased awareness of the need to reduce unnecessary arrests, or public pressure for accountability.
+The plot shows that arrest rates were consistently highest in Oakland, but all three cities experienced a slight decline in arrest rates after 2016 with Oakland's being more stagnant. This trend may suggest that policing practices were influenced by reforms or policy changes aimed at reducing arrests. Such changes could reflect shifts in law enforcement priorities, increased awareness of the need to reduce unnecessary arrests, or public pressure for accountability.
 
 ## Search Rates by Race & City
 
@@ -109,7 +109,7 @@ ggplot(race_search, aes(x = reorder(subject_race, -search_rate), y = search_rate
   theme_minimal() + theme(text = element_text(size = 12))
 ```
 
-The bar plot highlights significant racial disparities in search rates. Black and Hispanic drivers experienced consistently higher search rates compared to White and Asian drivers. Oakland displayed the highest disparities, with Black drivers facing a significantly higher likelihood of being searched. These results align with broader concerns about racial profiling in policing, suggesting that people of color are disproportionately subjected to searches, even if they are not more likely to possess contraband.
+The bar plot highlights significant racial disparities in search rates. Black and Hispanic drivers experienced consistently higher search rates compared to White and Asian drivers. Oakland displayed the highest disparities, with Black drivers facing a significantly higher likelihood of being searched. Hispanics and White drivers were searched more frequently in San Jose compared to other cities. These results align with broader concerns about racial profiling in policing, suggesting that people of color are disproportionately subjected to searches, even if they are not more likely to possess contraband.
 
 ## Conclusion
 
