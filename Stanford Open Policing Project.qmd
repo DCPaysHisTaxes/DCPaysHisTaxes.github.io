@@ -28,6 +28,7 @@ library(DBI)
 library(RMariaDB)
 library(ggplot2)
 
+
 con_traffic <- DBI::dbConnect(
   RMariaDB::MariaDB(),
   dbname = "traffic",
@@ -66,7 +67,7 @@ ORDER BY city, stop_year;
 
 ```{r}
 ggplot(arrest_trend, aes(x = stop_year, y = arrest_rate, color = city)) +
-  geom_line(size = 1.2) +
+  geom_line(linewidth = 1.2) +  # Changed 'size' to 'linewidth'
   geom_point(size = 2) +
   labs(title = "Arrest Rate Trends (2014-2017)", x = "Year (2014-2017)", y = "Arrest Rate (%)", color = "City") +
   theme_minimal() + theme(text = element_text(size = 12))
