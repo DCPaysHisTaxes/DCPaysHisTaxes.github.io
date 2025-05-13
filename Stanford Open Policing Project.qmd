@@ -8,7 +8,7 @@ execute:
   message: false
 ---
 
-## Introduction
+#Introduction
 
 This analysis explores trends in traffic stops across three major California cities—San Francisco, Oakland, and San Jose—using data from the Stanford Open Policing Project database. These cities were chosen due to their diverse populations, significant differences in law enforcement practices, and their status as major urban centers within California. By focusing on these three cities, we aim to capture a representative understanding of how policing practices vary across urban environments with distinct social and demographic compositions.
 
@@ -21,7 +21,7 @@ This analysis is motivated by ongoing discussions about racial disparities in la
 
 The Stanford Open Policing Project database is one of the largest public datasets of police stops in the United States, making it an invaluable resource for assessing the impact of law enforcement practices on different communities. Through SQL queries and data visualization, we will investigate how these practices differ by race and city.
 
-## Data Connection and Setup
+#Data Connection and Setup
 
 ```{r}
 library(DBI)
@@ -38,7 +38,7 @@ con_traffic <- DBI::dbConnect(
 )
 ```
 
-## Arrest Rates Over Time per City
+#Arrest Rates Over Time per City
 
 To explore changes in arrest rates over time, we calculate the annual arrest rate for each city between 2014 and 2017. Arrest rates are calculated as the percentage of stops that resulted in an arrest.
 
@@ -121,7 +121,7 @@ This analysis reveals several key insights:
 
 These findings provide evidence of persistent racial inequalities in policing, underscoring the importance of data-driven policy evaluation to promote fairer law enforcement practices.
 
-### References
+Work Cited:
 
 -   Stanford Open Policing Project — https://openpolicing.stanford.edu/data/
 -   Pierson, Emma, et al. 2020. “A Large-Scale Analysis of Racial Disparities in Police Stops Across the United States.” Nature Human Behaviour, 1–10.

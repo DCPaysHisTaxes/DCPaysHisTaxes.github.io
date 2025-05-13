@@ -10,6 +10,10 @@ execute:
   message: false
 ---
 
+This analysis explores the relationship between climate variables (temperature and precipitation) and the rate of glacial retreat in the Himalayas. Using a multiple regression model, the analysis identifies how rising temperatures significantly accelerate glacial retreat, while precipitation has a more complex effect that varies with seasonal patterns. The findings highlight the critical impact of climate change on the region's glaciers.
+
+
+
 ```{r}
 library(tidyverse)
 

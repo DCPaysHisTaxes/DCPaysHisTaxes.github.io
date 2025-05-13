@@ -1,0 +1,124 @@
+---
+title: "Whatcha Tweeting Mr. President? Analyzing the Tweets of President Barack Obama"
+subtitle: "Final Presentation – May 13, 2025"
+author: "Daniel Coker"
+format: revealjs
+---
+
+# Introduction
+
+- **Project Overview:** Analysis of Barack Obama's Tweets during his presidency (2009-2017).
+- **Dataset:** National Archives collection of Obama's Tweets.
+- **Objectives:**
+  - Explore tweeting patterns over time.
+  - Analyze tweet frequency and sentiment.
+  - Investigate most frequently used words and phrases.
+
+#Background
+
+- **Context:**
+  - Barack Obama was the first US President to actively use social media, specifically Twitter, throughout his presidency and campaign.
+  - The tweets that were analyzed were collected from Barack Obama's personal Twitter account. No other affilated tweets were collected.
+- **Data Source:**
+  - National Archives' Barack Obama Presidential Library.
+
+
+#Tweet Frequency
+
+- **Monthly Tweet Analysis:**
+- Significant peaks were observed through the latter half of his presidency especially between the summers of  2015 & 2016.
+- Potential causes include political campaigns, Black Lives Matter protests, and major policy announcements could help explain certain spikes.
+
+```{r}
+library(tidyverse)
+library(tidytext)
+library(ggplot2) 
+
+
+tweets <- read_csv("tweets.csv")
+tweets <- tweets |>
+  mutate(Date = as.Date(timestamp), MonthYear = floor_date(Date, "month")) 
+
+tweet_counts <- tweets |>
+  count(MonthYear)
+
+# Plotting
+ggplot(tweet_counts, aes(x = MonthYear, y = n)) +
+  geom_col(fill = "navy", alpha = 0.7) +
+  theme_light() +
+  labs(title = "Frequency of Obama's Tweets by Month",
+       x = "Month-Year",
+       y = "Number of Tweets") +
+  scale_x_date(date_labels = "%b %Y", date_breaks = "6 months") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+
+#Heatmap Analysis (Mentions of 'America')
+
+- **Focus:** Tweets that specifically mention "America".
+-Meant to identify periods of high patriotic or policy-driven content.
+
+```{r}
+tweets |>
+  filter(str_detect(text, "(?i)\\bamerica\\b")) |>  
+  mutate(Year = year(Date), Month = month(Date, label = TRUE)) |>
+  count(Year, Month) |>
+  ggplot(aes(x = Month, y = as.factor(Year), fill = n)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient(low = "orange", high = "red") +
+  theme_minimal() +
+  labs(title = "Obama's Tweet Frequency Heatmap (Mentions of 'America')",
+       x = "Month",
+       y = "Year",
+       fill = "Tweets")
+```
+
+
+
+#Word Frequency Analysis
+
+- **Most Used Words:** I wanted to analyze Obama's most common tweeted words. 
+-Wanted to see if there were any nuanced meanings/themes behind his diction through his time in office
+- **Common Words I Excluded:** "you," "the," "to," "and," "a," etc.
+
+```{r}
+exclude_words <- c("you", "the", "to", "and", "a", "for", "on", "of")
+
+word_counts <- tweets |>
+  mutate(text = str_to_lower(text), text = str_replace_all(text, "[^a-z\\s]", "")) |>
+  unnest_tokens(word, text) |>
+  filter(!word %in% exclude_words) |>
+  count(word, sort = TRUE) |>
+  filter(n > 20)
+
+# Plotting
+word_counts |>
+  top_n(20, n) |>
+  ggplot(aes(x = reorder(word, n), y = n)) +
+  geom_col(fill = "purple") +
+  coord_flip() +
+  theme_minimal() +
+  labs(title = "Top 20 Most Used Words in Obama's Tweets",
+       x = "Word",
+       y = "Frequency")
+```
+
+
+
+#Insights & Conclusions
+
+- **Findings:**
+  - It seems Obama used Twitter to communicate unity and national pride.
+  - High activity observed in politically charged periods especially during the 2016 election process.
+- **Ways to Improve:**
+  - Explore further sentiment analysis of tweets.
+  -Try to analyze tweets that predate this dataset
+ -Connect voter turnout or approval with endorsed tweets
+
+
+
+# That's All Folks!
+
+- **Any questions?**

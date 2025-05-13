@@ -1,0 +1,39 @@
+---
+title: "Obama Expanded"
+author: "Daniel Coker"
+format: html
+execute:
+  warning: false
+  message: false
+---
+This is an expanded version of my previous Obama Tweet project but with even more regular expressions added. The goals of this project is to:
+
+  - Analyze Barack Obama's Tweets during his presidency.
+  - Explore tweeting patterns over time.
+  - Analyze tweet frequency and sentiment.
+  - Investigate most frequently used words and phrases using extensive regular expressions.
+
+---
+
+
+```{r}
+library(tidyverse)
+library(lubridate)
+
+tweets <- read_csv("tweets.csv")
+
+#Regular Expressions for Text Cleaning
+tweets_clean <- tweets |>
+  mutate(text = str_to_lower(text),
+         text = str_replace_all(text, "[^a-z0-9[:space:]]", ""),
+         text = str_squish(text),
+         text = str_remove_all(text, "\\b(rt|http|https|www)\\b"),
+         text = str_replace_all(text, "\\b(america|americas|american|americans)\\b", "America"),
+         text = str_replace_all(text, "\\b(us|u\\.s\\.|united states|usa)\\b", "USA"),
+         text = str_replace_all(text, "\\b(president|pres|potus|barack obama|obama)\\b", "President Obama"),
+         text = str_replace_all(text, "\\b(democracy|freedom|liberty)\\b", "Democracy"),
+         text = str_replace_all(text, "\\b(hope|change|progress|together)\\b", "Positive"),
+         text = str_replace_all(text, "\\b(hate|violence|war|division|anger)\\b", "Negative"))
+
+head(tweets_clean$text, 5)
+```

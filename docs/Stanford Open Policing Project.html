@@ -157,6 +157,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="./Stanford Open Policing Project.html">
  <span class="dropdown-text">Stanford Open Policing Project Regression</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./Final.html">
+ <span class="dropdown-text">Final Presentation</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Obama Expanded.thml">
+ <span class="dropdown-text">Obama Expanded</span></a>
+  </li>  
     </ul>
   </li>
 </ul>
@@ -175,14 +183,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#data-connection-and-setup" id="toc-data-connection-and-setup" class="nav-link" data-scroll-target="#data-connection-and-setup">Data Connection and Setup</a></li>
-  <li><a href="#arrest-rates-over-time-per-city" id="toc-arrest-rates-over-time-per-city" class="nav-link" data-scroll-target="#arrest-rates-over-time-per-city">Arrest Rates Over Time per City</a></li>
-  <li><a href="#search-rates-by-race-city" id="toc-search-rates-by-race-city" class="nav-link" data-scroll-target="#search-rates-by-race-city">Search Rates by Race &amp; City</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a>
-  <ul class="collapse">
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
-  </ul></li>
+  <li><a href="#search-rates-by-race-city" id="toc-search-rates-by-race-city" class="nav-link active" data-scroll-target="#search-rates-by-race-city">Search Rates by Race &amp; City</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -220,8 +222,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>#Introduction</p>
 <p>This analysis explores trends in traffic stops across three major California cities—San Francisco, Oakland, and San Jose—using data from the Stanford Open Policing Project database. These cities were chosen due to their diverse populations, significant differences in law enforcement practices, and their status as major urban centers within California. By focusing on these three cities, we aim to capture a representative understanding of how policing practices vary across urban environments with distinct social and demographic compositions.</p>
 <p>The primary goals of this analysis are to answer two critical questions:</p>
 <ol type="1">
@@ -230,9 +231,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>This analysis is motivated by ongoing discussions about racial disparities in law enforcement, which remain a significant social and political issue in the United States. Understanding arrest and search rate trends is essential for identifying systemic inequalities and assessing the impact of policy reforms. This analysis not only reveals the presence of disparities but also allows us to examine how these disparities have persisted or evolved over time.</p>
 <p>The Stanford Open Policing Project database is one of the largest public datasets of police stops in the United States, making it an invaluable resource for assessing the impact of law enforcement practices on different communities. Through SQL queries and data visualization, we will investigate how these practices differ by race and city.</p>
-</section>
-<section id="data-connection-and-setup" class="level2">
-<h2 class="anchored" data-anchor-id="data-connection-and-setup">Data Connection and Setup</h2>
+<p>#Data Connection and Setup</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RMariaDB)</span>
@@ -247,9 +246,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">password =</span> <span class="fu">Sys.getenv</span>(<span class="st">"TRAFFIC_PWD"</span>)</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="arrest-rates-over-time-per-city" class="level2">
-<h2 class="anchored" data-anchor-id="arrest-rates-over-time-per-city">Arrest Rates Over Time per City</h2>
+<p>#Arrest Rates Over Time per City</p>
 <p>To explore changes in arrest rates over time, we calculate the annual arrest rate for each city between 2014 and 2017. Arrest rates are calculated as the percentage of stops that resulted in an arrest.</p>
 <div class="cell" data-output.var="arrest_trend">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> city, stop_year, <span class="fu">ROUND</span>(<span class="fl">100.0</span> <span class="op">*</span> <span class="fu">AVG</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> arrest_made <span class="cf">THEN</span> <span class="dv">1</span> <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>), <span class="dv">2</span>) <span class="kw">AS</span> arrest_rate</span>
@@ -288,7 +285,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>The plot shows that arrest rates were consistently highest in Oakland, but all three cities experienced a slight decline in arrest rates after 2016 with Oakland’s being more stagnant. This trend may suggest that policing practices were influenced by reforms or policy changes aimed at reducing arrests. Such changes could reflect shifts in law enforcement priorities, increased awareness of the need to reduce unnecessary arrests, or public pressure for accountability.</p>
-</section>
 <section id="search-rates-by-race-city" class="level2">
 <h2 class="anchored" data-anchor-id="search-rates-by-race-city">Search Rates by Race &amp; City</h2>
 <p>We further explore racial disparities in police stops by calculating the search rates for different racial groups in each city. Search rates indicate the percentage of stops that led to a search of the vehicle or individual.</p>
@@ -338,15 +334,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Despite some reforms, racial disparities persisted throughout 2014-2017</strong>, indicating the need for continued monitoring, further policy evaluation, and potential reforms to address inequality.</li>
 </ol>
 <p>These findings provide evidence of persistent racial inequalities in policing, underscoring the importance of data-driven policy evaluation to promote fairer law enforcement practices.</p>
-<section id="references" class="level3">
-<h3 class="anchored" data-anchor-id="references">References</h3>
+<p>Work Cited:</p>
 <ul>
 <li>Stanford Open Policing Project — https://openpolicing.stanford.edu/data/</li>
 <li>Pierson, Emma, et al.&nbsp;2020. “A Large-Scale Analysis of Racial Disparities in Police Stops Across the United States.” Nature Human Behaviour, 1–10.</li>
 </ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

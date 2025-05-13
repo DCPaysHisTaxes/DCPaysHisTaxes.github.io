@@ -174,8 +174,24 @@ window.Quarto = {
  <span class="dropdown-text">Obama Tweet</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./Chick_Permutation.html">
+    <a class="dropdown-item" href="./Chick Permutation.html">
  <span class="dropdown-text">Chick Permutation</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Data Science Ethics.html">
+ <span class="dropdown-text">Data Science Ethics</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Stanford Open Policing Project.html">
+ <span class="dropdown-text">Stanford Open Policing Project Regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Final.html">
+ <span class="dropdown-text">Final Presentation</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./Obama Expanded.thml">
+ <span class="dropdown-text">Obama Expanded</span></a>
   </li>  
     </ul>
   </li>
@@ -341,28 +357,28 @@ window.Quarto = {
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(word_counts, <span class="dv">20</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 20 × 2
-   word      n
-   &lt;chr&gt; &lt;int&gt;
- 1 the     255
- 2 to      249
- 3 and     131
- 4 of      126
- 5 a       117
- 6 we       91
- 7 for      90
- 8 in       89
- 9 our      88
-10 on       60
-11 you      57
-12 with     44
-13 more     43
-14 it       42
-15 is       41
-16 this     41
-17 that     40
-18 can      38
-19 as       37
-20 i        35</code></pre>
+   word          n
+   &lt;chr&gt;     &lt;int&gt;
+ 1 the       20369
+ 2 to        15216
+ 3 rt         9663
+ 4 of         8613
+ 5 obama      8398
+ 6 on         7549
+ 7 a          7385
+ 8 in         7381
+ 9 president  6936
+10 for        5709
+11 and        5511
+12 potus      4943
+13 we         4086
+14 our        3992
+15 is         3856
+16 at         3820
+17 you        2878
+18 that       2484
+19 with       2454
+20 watch      2442</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Most used bigrams (two-word phrases)</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>bigram_counts <span class="ot">&lt;-</span> tweets_clean <span class="sc">%&gt;%</span></span>
@@ -373,18 +389,29 @@ window.Quarto = {
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Display top bigrams</span></span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(bigram_counts, <span class="dv">20</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 9 × 2
-  bigram             n
-  &lt;chr&gt;          &lt;int&gt;
-1 of the            21
-2 to the            19
-3 for the           16
-4 and the           15
-5 we can            14
-6 more than         13
-7 of our            12
-8 climate change    11
-9 in the            11</code></pre>
+<pre><code># A tibble: 20 × 2
+   bigram               n
+   &lt;chr&gt;            &lt;int&gt;
+ 1 president obama   5284
+ 2 of the            1858
+ 3 on the            1678
+ 4 in the            1142
+ 5 to the            1115
+ 6 rt whlive         1075
+ 7 at the             993
+ 8 obama on           982
+ 9 for the            789
+10 white house        745
+11 potus on           662
+12 watch live         624
+13 the white          583
+14 more than          582
+15 happening now      575
+16 president obamas   566
+17 at pm              558
+18 rt vp              536
+19 pm et              531
+20 the president      513</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot top words</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>word_counts <span class="sc">|&gt;</span></span>
@@ -417,7 +444,7 @@ window.Quarto = {
 </div>
 <p>Part 3: Insights (What can we learn from this?)</p>
 <p>From understanding these graphs and the words picked a part from Obama’s tweets, we can see an over-aching narrative of unity and national pride throughout the latter end of this President’s career in office. The use of social media was implemented early in his career in office. During times like this, it is important to see how a public offical should be using social media as a bridge between indifference and not as a tool for division.</p>
-<p>SOURCES:</p>
+<p>Work Cited:</p>
 <p>Obama Presidential Library. “Archived White House Websites and Social Media.” Barack Obama Presidential Library, National Archives and Records Administration, https://www.obamalibrary.gov/digital-research-room/archived-white-house-websites-and-social-media. Accessed 4 Mar.&nbsp;2025.</p>
 <p>Wellford, Rachel. “Trump, Clinton and the Top 10 Political Stories of 2015.” PBS NewsHour, 28 Dec.&nbsp;2015, https://www.pbs.org/newshour/nation/trump-clinton-and-the-top-10-political-stories-of-2015.</p>
 

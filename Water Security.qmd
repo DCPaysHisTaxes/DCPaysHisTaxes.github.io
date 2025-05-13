@@ -11,6 +11,8 @@ execute:
  message: false
 ---
 
+This analysis investigates the factors influencing water security, focusing on rainfall, water usage, and population density. The multiple regression model reveals that higher rainfall generally enhances water security, while excessive water usage negatively affects it. Population density has varying effects depending on regional characteristics. These findings provide insights into the complex factors that determine water security.
+
 ```{r}
 water_sec <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-01-28/water_insecurity_2023.csv") 
 
