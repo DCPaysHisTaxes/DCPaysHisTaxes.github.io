@@ -14,7 +14,7 @@ format: revealjs
   - Analyze tweet frequency and sentiment.
   - Investigate most frequently used words and phrases.
 
-#Background
+# Background
 
 - **Context:**
   - Barack Obama was the first US President to actively use social media, specifically Twitter, throughout his presidency and campaign.
@@ -23,7 +23,7 @@ format: revealjs
   - National Archives' Barack Obama Presidential Library.
 
 
-#Tweet Frequency
+# Tweet Frequency
 
 - **Monthly Tweet Analysis:**
 - Significant peaks were observed through the latter half of his presidency especially between the summers of  2015 & 2016.
@@ -55,7 +55,7 @@ ggplot(tweet_counts, aes(x = MonthYear, y = n)) +
 
 
 
-#Heatmap Analysis (Mentions of 'America')
+# Heatmap Analysis (Mentions of 'America')
 
 - **Focus:** Tweets that specifically mention "America".
 -Meant to identify periods of high patriotic or policy-driven content.
@@ -77,14 +77,14 @@ tweets |>
 
 
 
-#Word Frequency Analysis
+# Word Frequency Analysis
 
 - **Most Used Words:** I wanted to analyze Obama's most common tweeted words. 
 -Wanted to see if there were any nuanced meanings/themes behind his diction through his time in office
 - **Common Words I Excluded:** "you," "the," "to," "and," "a," etc.
 
 ```{r}
-exclude_words <- c("you", "the", "to", "and", "a", "for", "on", "of")
+exclude_words <- c("you", "the", "to", "and", "a", "for", "on", "of", "rt")
 
 word_counts <- tweets |>
   mutate(text = str_to_lower(text), text = str_replace_all(text, "[^a-z\\s]", "")) |>
@@ -107,7 +107,7 @@ word_counts |>
 
 
 
-#Insights & Conclusions
+# Insights & Conclusions
 
 - **Findings:**
   - It seems Obama used Twitter to communicate unity and national pride.
