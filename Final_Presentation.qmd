@@ -2,7 +2,13 @@
 title: "Whatcha Tweeting Mr. President? Analyzing the Tweets of President Barack Obama"
 subtitle: "Final Presentation – May 13, 2025"
 author: "Daniel Coker"
-format: revealjs
+format: 
+   revealjs: 
+   theme: simple
+   transition: slide
+   slide-number: true 
+   toc: true
+   css: style.css
 execute:
   echo: true
   fig-width: 12    
