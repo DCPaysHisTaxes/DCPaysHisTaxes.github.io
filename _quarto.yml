@@ -25,7 +25,7 @@ website:
           - text: "Final Presentation"
             href: Final.html
           - text: "Obama Expanded"
-            href: Obama Expanded.html
+            href: Obama Expanded.revealjs
 
 format:
   html:
