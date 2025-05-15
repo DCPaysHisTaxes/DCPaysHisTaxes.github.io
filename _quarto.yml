@@ -23,9 +23,9 @@ website:
           - text: "Stanford Open Policing Project Regression"
             href: Stanford Open Policing Project.html
           - text: "Final Presentation"
-            href: Final.html
+            href: Final.revealjs
           - text: "Obama Expanded"
-            href: Obama Expanded.revealjs
+            href: Obama Expanded.html
 
 format:
   html:
