@@ -3,6 +3,11 @@ title: "Whatcha Tweeting Mr. President? Analyzing the Tweets of President Barack
 subtitle: "Final Presentation – May 13, 2025"
 author: "Daniel Coker"
 format: revealjs
+execute:
+  echo: true
+  fig-width: 12    
+  fig-height: 8    
+  out-width: 100%  
 ---
 
 # Introduction
@@ -43,7 +48,7 @@ tweet_counts <- tweets |>
   count(MonthYear)
 
 # Plotting
-ggplot(tweet_counts, aes(x = MonthYear, y = n)) +
+ graph1 <- ggplot(tweet_counts, aes(x = MonthYear, y = n)) +
   geom_col(fill = "navy", alpha = 0.7) +
   theme_light() +
   labs(title = "Frequency of Obama's Tweets by Month",
@@ -51,6 +56,10 @@ ggplot(tweet_counts, aes(x = MonthYear, y = n)) +
        y = "Number of Tweets") +
   scale_x_date(date_labels = "%b %Y", date_breaks = "6 months") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+# 
+```{r} 
+print(graph1) 
 ```
 
 
@@ -61,7 +70,7 @@ ggplot(tweet_counts, aes(x = MonthYear, y = n)) +
 -Meant to identify periods of high patriotic or policy-driven content.
 
 ```{r}
-tweets |>
+heatmap <- tweets |>
   filter(str_detect(text, "(?i)\\bamerica\\b")) |>  
   mutate(Year = year(Date), Month = month(Date, label = TRUE)) |>
   count(Year, Month) |>
@@ -75,6 +84,10 @@ tweets |>
        fill = "Tweets")
 ```
 
+# 
+```{r} 
+print(heatmap)
+```
 
 
 # Word Frequency Analysis
@@ -94,7 +107,7 @@ word_counts <- tweets |>
   filter(n > 20)
 
 # Plotting
-word_counts |>
+common_words <- word_counts |>
   top_n(20, n) |>
   ggplot(aes(x = reorder(word, n), y = n)) +
   geom_col(fill = "purple") +
@@ -105,7 +118,12 @@ word_counts |>
        y = "Frequency")
 ```
 
+#
 
+```{r} 
+print(common_words)
+```
+Most frequently used words 
 
 # Insights & Conclusions
 
