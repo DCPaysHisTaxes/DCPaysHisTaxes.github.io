@@ -309,7 +309,7 @@ Daniel Coker
 <li><strong>Common Words I Excluded:</strong> “you,” “the,” “to,” “and,” “a,” etc.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>exclude_words <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"you"</span>, <span class="st">"the"</span>, <span class="st">"to"</span>, <span class="st">"and"</span>, <span class="st">"a"</span>, <span class="st">"for"</span>, <span class="st">"on"</span>, <span class="st">"of"</span>, <span class="st">"rt"</span>)</span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>exclude_words <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"you"</span>, <span class="st">"the"</span>, <span class="st">"to"</span>, <span class="st">"and"</span>, <span class="st">"a"</span>, <span class="st">"for"</span>, <span class="st">"on"</span>, <span class="st">"of"</span>, <span class="st">"rt"</span>, <span class="st">"is"</span>)</span>
 <span id="cb5-2"><a></a></span>
 <span id="cb5-3"><a></a>word_counts <span class="ot">&lt;-</span> tweets <span class="sc">|&gt;</span></span>
 <span id="cb5-4"><a></a>  <span class="fu">mutate</span>(<span class="at">text =</span> <span class="fu">str_to_lower</span>(text), <span class="at">text =</span> <span class="fu">str_replace_all</span>(text, <span class="st">"[^a-z</span><span class="sc">\\</span><span class="st">s]"</span>, <span class="st">""</span>)) <span class="sc">|&gt;</span></span>

@@ -97,7 +97,7 @@ print(heatmap)
 - **Common Words I Excluded:** "you," "the," "to," "and," "a," etc.
 
 ```{r}
-exclude_words <- c("you", "the", "to", "and", "a", "for", "on", "of", "rt")
+exclude_words <- c("you", "the", "to", "and", "a", "for", "on", "of", "rt", "is")
 
 word_counts <- tweets |>
   mutate(text = str_to_lower(text), text = str_replace_all(text, "[^a-z\\s]", "")) |>
