@@ -1,17 +1,11 @@
 ---
-title: "Daniel Coker"
-image: Daniel_Coker.jpg
-toc: false
-about: 
-   template: jolla
-   image-shape: round 
-   image-width: 17em
-links:
+title: "Daniel Coker" image: Daniel_Coker.jpg toc: false about: template: jolla
+image-shape: round image-width: 17em links:
 - text: LinkedIn
-  href: https://www.linkedin.com/in/daniel-coker-b83a6027a/
+href: https://www.linkedin.com/in/daniel-coker-b83a6027a/
 - text: Email
-  href: mailto:danielcoker901@gmail.com
+href: mailto:danielcoker901@gmail.com
 ---
-
-My name is Daniel, and I enjoy rice and working with data! Thank you for stopping by! Have a good day!
+My name is Daniel, and I enjoy rice and working with data! Thank you for
+stopping by! Have a good day!
 
